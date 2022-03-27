@@ -4,6 +4,6 @@ The example provides REST services set exposing movies and recommendations data 
 There is no docker here - jar artefact is meant to be run in a dedicated docker container of spark-dataprocessing project.
 
 The current status: application is tested to connect to the Cassandra cluster (3 nodes) in order to collect one test row.
-Cassandra Spring Data was used. I map the resulting row onto annoted PJO class.
+Cassandra Spring Data was used. I map the resulting row onto annoted POJO class.
 
 
