@@ -9,11 +9,23 @@ public class Movie {
 
     @PrimaryKey private final String id;
     @Column("title") private final String title;
+    @Column("overview") private final String overview;
+    @Column("homepage") private final String homepage;
 
 
-    public Movie(String id, String title) {
+    public String getOverview() {
+        return this.overview;
+    }
+
+    public String getHomepage() {
+        return this.homepage;
+    }
+
+    public Movie(String id, String title, String overview, String homepage) {
         this.id = id;
         this.title = title;
+        this.overview = overview;
+        this.homepage = homepage;
     }
 
     public String getId() {
@@ -34,3 +46,25 @@ public class Movie {
 //    UDTValue alternative;
 }
 
+/**
+ budget bigint,
+ genres frozen<list<id_name>>,
+ homepage text,
+ id bigint PRIMARY KEY,
+ keywords frozen<list<id_name>>,
+ original_language text,
+ original_title text,
+ overview text,
+ popularity double,
+ production_companies frozen<list<id_name>>,
+ production_countries frozen<list<iso_name>>,
+ release_date date,
+ revenue double,
+ runtime int,
+ spoken_languages frozen<list<iso_name>>,
+ status text,
+ tagline text,
+ title text,
+ vote_average double,
+ vote_count bigint
+ */

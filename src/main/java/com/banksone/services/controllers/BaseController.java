@@ -1,5 +1,6 @@
 package com.banksone.services.controllers;
 
+import com.banksone.services.domain.Movie;
 import com.banksone.services.domain.Stat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -28,23 +29,30 @@ public class BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
     @GetMapping("/moviesapi/list")
-    List<Stat> getMovies() {
+    HashMap<String, Object> getMovies() {
         CqlSession cqlSession = CqlSession
                 .builder()
                 .addContactPoint(new InetSocketAddress("cass_seedprovider", 9042))
+                .addContactPoint(new InetSocketAddress("cass_node_1", 9042))
+                .addContactPoint(new InetSocketAddress("cass_node_2", 9042))
                 .withLocalDatacenter("datacenter1")
                 .withKeyspace("vod").build();
 
         CassandraOperations template = new CassandraTemplate(cqlSession);
 
-        Stat resultStat = template.selectOne(Query.query(Criteria.where("budget").is(29932L)), Stat.class);
-        LOGGER.info("result from db: ", resultStat);
+        //List<Stat> resultStat = template.select(Query.empty(), Stat.class);
+        List<Movie> resultStat = template.select("select id, title, overview, homepage from movies limit 20", Movie.class);
+        HashMap<String, Object> resultJson = new HashMap<String, Object>();
+        resultJson.put("movies", resultStat);
+        resultJson.put("info", "test");
 
-        ArrayList<Stat> resultsList = new ArrayList();
-        resultsList.add(resultStat);
+        LOGGER.info("result from db 22: ", resultJson);
+
         cqlSession.close();
+        //ArrayList<Stat> result = new ArrayList<Stat>();
+        //result.add(resultStat);
 
-        return resultsList;
+        return resultJson;
     }
 
     @GetMapping("/moviesapi/recommendations")
