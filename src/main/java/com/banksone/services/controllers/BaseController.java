@@ -46,7 +46,7 @@ public class BaseController {
         resultJson.put("movies", resultStat);
         resultJson.put("info", "test");
 
-        LOGGER.info("result from db 22: ", resultJson);
+        LOGGER.info("result from db: ", resultStat.toString());
 
         cqlSession.close();
         //ArrayList<Stat> result = new ArrayList<Stat>();

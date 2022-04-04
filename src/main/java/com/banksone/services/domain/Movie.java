@@ -8,9 +8,9 @@ import org.springframework.data.cassandra.core.mapping.Table;
 public class Movie {
 
     @PrimaryKey private final String id;
-    @Column("title") private final String title;
-    @Column("overview") private final String overview;
-    @Column("homepage") private final String homepage;
+    @Column(value = "title") private final String title;
+    @Column(value = "overview") private final String overview;
+    @Column(value = "homepage") private final String homepage;
 
 
     public String getOverview() {
@@ -29,17 +29,17 @@ public class Movie {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
-    private String getTitle() {
-        return title;
+    public String getTitle() {
+        return this.title;
     }
 
     @Override
     public String toString() {
         return String.format("{ @type = %1$s, id = %2$s, title = %3$s }", getClass().getName(), getId(),
-                getTitle());
+                getTitle(), getOverview(), getHomepage());
     }
 
 //    @CassandraType(type = Name.UDT, userTypeName = "tags")
